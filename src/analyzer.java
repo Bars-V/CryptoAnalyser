@@ -1,6 +1,3 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -254,6 +251,19 @@ public class analyzer {
     public static void statisticAnalyzer(String src, String sample) {
         HashMap srcMap = inMap(fileReadWrite.getFileContent(src));
         HashMap sampleMap = inMap(fileReadWrite.getFileContent(sample));
+
+        int srcSize = srcMap.size();
+        int sampleSize = sampleMap.size();
+
+        HashMap<Character, Double> mapAnalizerSrc = new HashMap<>();
+        HashMap<Character, Double> mapAnalizerSample = new HashMap<>();
+
+        for (char o : srcMap.keySet()) {
+            double index = srcMap.get(o)/srcSize;
+            mapAnalizerSample.put(o, index);
+        }
+
+
     }
 
     private static HashMap inMap(String fileContent) {

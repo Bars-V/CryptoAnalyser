@@ -35,7 +35,7 @@ public class start {
             String fileContent = fileReadWrite.getFileContent(src);
             String decryptedContent = crypting.cryptoCaesar(fileContent, key, false);
             fileReadWrite.setFileContent(src, "_decrypted", decryptedContent);
-            System.out.println("Файл раcшифрован");
+            System.out.println("Файл расшифрован");
         } else if (select == 3) {
             System.out.println("Начат подбор ключа");
             String fileContent = fileReadWrite.getFileContent(src);
@@ -43,7 +43,7 @@ public class start {
             System.out.println("Найден ключ шифрования: " + key);
             String decryptedContent = crypting.cryptoCaesar(fileContent, key, false);
             fileReadWrite.setFileContent(src, "_decrypted", decryptedContent);
-            System.out.println("Файл разшифрован");
+            System.out.println("Файл расшифрован");
         } else if (select == 4) {
             System.out.println("Введите путь к файлу с образцом текста");
             String sample = scanner.nextLine();

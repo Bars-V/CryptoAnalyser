@@ -9,7 +9,6 @@ public class fileReadWrite {
         try {
             byte[] bytes = Files.readAllBytes(path);
             return new String(bytes);
-
         } catch (IOException e) {
             System.out.println("Файл не найден");
             return null;
