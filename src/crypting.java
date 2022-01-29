@@ -21,15 +21,18 @@ public class crypting {
             char a = text.charAt(i);
             int index = cryptoAlphabet.indexOf(a);
             char cryptChar;
-            if (crypt) {
-                cryptChar = cryptoAlphabet.get(index + key);
-            } else {
-                cryptChar = (char) cryptoAlphabet.get(size + index - key);
+            if (index > 0) {
+                if (crypt) {
+                    cryptChar = cryptoAlphabet.get(index + key);
+                } else {
+                    cryptChar = cryptoAlphabet.get(size + index - key);
 
+                }
+            } else {
+                cryptChar = a;
             }
             cryptingText = cryptingText + cryptChar;
         }
-
         return cryptingText;
     }
 
@@ -38,7 +41,7 @@ public class crypting {
         int key = 0;
         for (int i = 0; i < cryptoAlphabet().size(); i++) {
             String test = cryptoCaesar(cryptingText, i, false);
-            int index = analyzer.analyzer(test);
+            int index = analyzer.valid(test);
             if (index > temp) {
                 temp = index;
                 key = i;
@@ -51,7 +54,7 @@ public class crypting {
 
         String ruAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
         String enAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String symbol = " ,.?!@#$%^&*()_-+=:;|[]{}><\\`\"/~«»\n";
+        String symbol = " ,.?!@#$%^&*()_-+=:;|[]{}><\\`\"/~«»";
         String digit = "0123456789";
 
         ArrayList<Character> cryptoAlphabet = new ArrayList<>();
@@ -64,12 +67,12 @@ public class crypting {
             cryptoAlphabet.add(enAlphabet.charAt(i));
         }
 
-        for (int i = 0; i < symbol.length(); i++) {
-            cryptoAlphabet.add(symbol.charAt(i));
-        }
-
         for (int i = 0; i < digit.length(); i++) {
             cryptoAlphabet.add(digit.charAt(i));
+        }
+
+        for (int i = 0; i < symbol.length(); i++) {
+            cryptoAlphabet.add(symbol.charAt(i));
         }
 
         cryptoAlphabet.addAll(cryptoAlphabet);

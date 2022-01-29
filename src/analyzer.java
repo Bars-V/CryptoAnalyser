@@ -1,7 +1,11 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class analyzer {
-    public static int analyzer(String text) {
+    public static int valid(String text) {
         HashSet<Character> alpabet = new HashSet<>() {{
             add('а');
             add('ы');
@@ -245,5 +249,24 @@ public class analyzer {
 
 
         return index;
+    }
+
+    public static void statisticAnalyzer(String src, String sample) {
+        HashMap srcMap = inMap(fileReadWrite.getFileContent(src));
+        HashMap sampleMap = inMap(fileReadWrite.getFileContent(sample));
+    }
+
+    private static HashMap inMap(String fileContent) {
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < fileContent.length(); i++) {
+            char a = fileContent.charAt(i);
+            if (hashMap.containsKey(a)) {
+                hashMap.get(a);
+                hashMap.put(a, hashMap.get(a) + 1);
+            } else {
+                hashMap.put(a, 1);
+            }
+        }
+        return hashMap;
     }
 }
