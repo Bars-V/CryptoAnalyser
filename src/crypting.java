@@ -1,13 +1,14 @@
+import java.nio.Buffer;
+import java.security.CryptoPrimitive;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class crypting {
 
     public static String cryptoCaesar(String text, int key, boolean crypt) {
         String cryptingText = "";
-
         ArrayList<Character> cryptoAlphabet = crypting.cryptoAlphabet();
         int size = crypting.cryptoAlphabet().size() / 2;
-
 
         while (key > size) {
             key = key - size;
@@ -16,31 +17,31 @@ public class crypting {
         if (key == size) {
             key = 100;
         }
-
-        for (int i = 0; i < text.length(); i++) {
-            char a = text.charAt(i);
-            int index = cryptoAlphabet.indexOf(a);
-            char cryptChar;
-            if (index > 0) {
-                if (crypt) {
+            for (int i = 0; i < text.length(); i++) {
+                char a = text.charAt(i);
+                int index = cryptoAlphabet.indexOf(a);
+                char cryptChar;
+                if (index > 0) {
+                    if (crypt) {
                     cryptChar = cryptoAlphabet.get(index + key);
+                    } else {
+                        cryptChar = cryptoAlphabet.get(size + index - key);
+                    }
                 } else {
-                    cryptChar = cryptoAlphabet.get(size + index - key);
-
+                    cryptChar = a;
                 }
-            } else {
-                cryptChar = a;
+                cryptingText = cryptingText + cryptChar;
             }
-            cryptingText = cryptingText + cryptChar;
-        }
+
         return cryptingText;
     }
 
     public static Integer bruteforce(String cryptingText) {
+        String text = cryptingText.substring(0, 10000);
         int temp = Integer.MIN_VALUE;
         int key = 0;
         for (int i = 0; i < cryptoAlphabet().size(); i++) {
-            String test = cryptoCaesar(cryptingText, i, false);
+            String test = cryptoCaesar(text, i, false);
             int index = analyzer.valid(test);
             if (index > temp) {
                 temp = index;
