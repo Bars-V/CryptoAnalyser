@@ -1,20 +1,11 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class analyzer {
     public static int valid(String text) {
-        HashSet<Character> alpabet = new HashSet<>() {{
-            add('а');
-            add('ы');
-            add('у');
-            add('е');
-            add('и');
-            add('ю');
-            add('я');
-            add('э');
-            add('ё');
-            add('о');
-        }};
+
         HashSet<String> syllables = new HashSet<>() {{
             add("БА");
             add("БО");
@@ -243,40 +234,93 @@ public class analyzer {
                 index--;
             }
         }
-
-
         return index;
     }
 
-    public static void statisticAnalyzer(String src, String sample) {
-        HashMap srcMap = inMap(fileReadWrite.getFileContent(src));
-        HashMap sampleMap = inMap(fileReadWrite.getFileContent(sample));
+    public static void statisticAnalyzer(String encrypted, String sample) {
+        HashMap<Character, Double> encryptedMap = inMap(fileReadWrite.getFileContent(encrypted));
+        HashMap<Character, Double> sampleMap = inMap(fileReadWrite.getFileContent(sample));
+        HashMap<Character, Character> decodingMap = new HashMap<>();
 
-        int srcSize = srcMap.size();
-        int sampleSize = sampleMap.size();
-
-        HashMap<Character, Double> mapAnalizerSrc = new HashMap<>();
-        HashMap<Character, Double> mapAnalizerSample = new HashMap<>();
-
-        for (char o : srcMap.keySet()) {
-            double index = srcMap.get(o)/srcSize;
-            mapAnalizerSample.put(o, index);
+        for (Character character : sampleMap.keySet()) {
+            decodingMap.put(character, null);
         }
 
+        int encryptedSize = encryptedMap.size();
+        int sampleSize = sampleMap.size();
+        double[] encryptArray = new double[encryptedSize];
+        double[] sampleArray = new double[sampleSize];
 
+        int i = 0;
+        for (Character character : encryptedMap.keySet()) {
+            double part = encryptedMap.get(character) / encryptedSize;
+            encryptedMap.put(character, part);
+            encryptArray[i] = encryptedMap.get(character);
+            i++;
+        }
+
+        i = 0;
+        for (Character character : sampleMap.keySet()) {
+            Double part = sampleMap.get(character) / sampleSize;
+            sampleMap.put(character, part);
+            sampleArray[i] = sampleMap.get(character);
+            i++;
+        }
+
+//        for (Character character : encryptedMap.keySet()) {
+//            if(encryptedMap.get(character) > 10 && ){
+//                decodingMap.put(character, )
+//            }
+//        }
+
+        // если большее отличается от следующего
+
+//        System.out.println(encryptedMap.size());
+
+
+        Arrays.sort(encryptArray);
+        System.out.println(encryptArray[0]);
+        System.out.println(encryptArray[1]);
+        System.out.println(encryptArray[2]);
+        System.out.println(encryptArray[3]);
+        System.out.println(encryptArray[4]);
+        System.out.println(encryptArray[5]);
+
+//        System.out.println(encryptedMap.values());
+//        for (int j = 0; j < encryptArray.length; j++) {
+////            System.out.println(encryptArray[j]);
+//        }
+
+//        Arrays.sort(sampleArray);
+//        for (int j = 0; j < sampleArray.length; j++) {
+//            System.out.println(sampleArray[j]);
+//        }
+//        System.out.println(decodingMap);
+//        System.out.println(encryptedMap);
+//        System.out.println(sampleMap);
     }
 
     private static HashMap inMap(String fileContent) {
-        HashMap<Character, Integer> hashMap = new HashMap<>();
+        HashMap<Character, Double> hashMap = new HashMap<>();
+
         for (int i = 0; i < fileContent.length(); i++) {
             char a = fileContent.charAt(i);
             if (hashMap.containsKey(a)) {
                 hashMap.get(a);
                 hashMap.put(a, hashMap.get(a) + 1);
             } else {
-                hashMap.put(a, 1);
+                hashMap.put(a, 1.0);
             }
         }
+
         return hashMap;
     }
+
+    private static void variables(String cryptedText, HashMap cryptedMap){
+        String text = cryptedText.substring(0, 10_000);
+        HashMap<Character, Character> testMap = new HashMap<>();
+        ArrayList<Character> testAlpabet = new ArrayList<>();
+        // далее нужна рекурсия
+    }
+
 }

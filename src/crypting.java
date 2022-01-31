@@ -14,27 +14,54 @@ public class crypting {
         if (key == size) {
             key = 100;
         }
-            for (int i = 0; i < text.length(); i++) {
-                char a = text.charAt(i);
-                int index = cryptoAlphabet.indexOf(a);
-                char cryptChar;
-                if (index > 0) {
-                    if (crypt) {
+        for (int i = 0; i < text.length(); i++) {
+            char a = text.charAt(i);
+            int index = cryptoAlphabet.indexOf(a);
+            char cryptChar;
+            if (index > 0) {
+                if (crypt) {
                     cryptChar = cryptoAlphabet.get(index + key);
-                    } else {
-                        cryptChar = cryptoAlphabet.get(size + index - key);
-                    }
                 } else {
-                    cryptChar = a;
+                    cryptChar = cryptoAlphabet.get(size + index - key);
                 }
-                cryptingText = cryptingText + cryptChar;
+            } else {
+                cryptChar = a;
             }
+            cryptingText = cryptingText + cryptChar;
+        }
+
+        return cryptingText;
+    }
+
+    public static String cryptoCaesar(String text, int key, ArrayList Alphabet) {
+        String cryptingText = "";
+        ArrayList<Character> cryptoAlphabet = Alphabet;
+        int size = crypting.cryptoAlphabet().size() / 2;
+
+        while (key > size) {
+            key = key - size;
+        }
+
+        if (key == size) {
+            key = 100;
+        }
+        for (int i = 0; i < text.length(); i++) {
+            char a = text.charAt(i);
+            int index = cryptoAlphabet.indexOf(a);
+            char cryptChar;
+            if (index > 0) {
+                cryptChar = cryptoAlphabet.get(size + index - key);
+            } else {
+                cryptChar = a;
+            }
+            cryptingText = cryptingText + cryptChar;
+        }
 
         return cryptingText;
     }
 
     public static Integer bruteforce(String cryptingText) {
-        String text = cryptingText.substring(0, 10000);
+        String text = cryptingText.substring(0, 10_000);
         int temp = Integer.MIN_VALUE;
         int key = 0;
         for (int i = 0; i < cryptoAlphabet().size(); i++) {
