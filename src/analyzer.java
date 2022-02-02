@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class analyzer {
     public static int valid(String text) {
@@ -240,11 +237,7 @@ public class analyzer {
     public static void statisticAnalyzer(String encrypted, String sample) {
         HashMap<Character, Double> encryptedMap = inMap(fileReadWrite.getFileContent(encrypted));
         HashMap<Character, Double> sampleMap = inMap(fileReadWrite.getFileContent(sample));
-        HashMap<Character, Character> decodingMap = new HashMap<>();
 
-        for (Character character : sampleMap.keySet()) {
-            decodingMap.put(character, null);
-        }
 
         int encryptedSize = encryptedMap.size();
         int sampleSize = sampleMap.size();
@@ -267,37 +260,9 @@ public class analyzer {
             i++;
         }
 
-//        for (Character character : encryptedMap.keySet()) {
-//            if(encryptedMap.get(character) > 10 && ){
-//                decodingMap.put(character, )
-//            }
-//        }
-
-        // если большее отличается от следующего
-
-//        System.out.println(encryptedMap.size());
-
-
         Arrays.sort(encryptArray);
-        System.out.println(encryptArray[0]);
-        System.out.println(encryptArray[1]);
-        System.out.println(encryptArray[2]);
-        System.out.println(encryptArray[3]);
-        System.out.println(encryptArray[4]);
-        System.out.println(encryptArray[5]);
+        Arrays.sort(sampleArray);
 
-//        System.out.println(encryptedMap.values());
-//        for (int j = 0; j < encryptArray.length; j++) {
-////            System.out.println(encryptArray[j]);
-//        }
-
-//        Arrays.sort(sampleArray);
-//        for (int j = 0; j < sampleArray.length; j++) {
-//            System.out.println(sampleArray[j]);
-//        }
-//        System.out.println(decodingMap);
-//        System.out.println(encryptedMap);
-//        System.out.println(sampleMap);
     }
 
     private static HashMap inMap(String fileContent) {
@@ -316,11 +281,81 @@ public class analyzer {
         return hashMap;
     }
 
-    private static void variables(String cryptedText, HashMap cryptedMap){
-        String text = cryptedText.substring(0, 10_000);
-        HashMap<Character, Character> testMap = new HashMap<>();
-        ArrayList<Character> testAlpabet = new ArrayList<>();
-        // далее нужна рекурсия
+    private static ArrayList cryptoAlphabet(String file) {
+
+        String fileContent = fileReadWrite.getFileContent(file);
+
+        Boolean ru = false, en = false, digital = false, symb = false;
+        String ruAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+        String enAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String symbol = " ,.?!@#$%^&*()_-+=:;|[]{}><\\`\"/~«»";
+        String digit = "0123456789";
+
+//        Проверка алфавитов
+
+        int ruIndex = 0;
+        int enIndex = 0;
+        int digitIndex = 0;
+        int symbolIndex = 0;
+
+        for (int i = 0; i < fileContent.length(); i++) {
+            char a = fileContent.charAt(i);
+
+            if (ruAlphabet.indexOf(a) > 0) {
+                ruIndex++;
+            } else if (enAlphabet.indexOf(a) > 0) {
+                enIndex++;
+            } else if (digit.indexOf(a) > 0) {
+                digitIndex++;
+            } else if (symbol.indexOf(a) > 0) {
+                symbolIndex++;
+            }
+        }
+
+        if (ruIndex > 10) {
+            ru = true;
+        }
+        if (enIndex > 10) {
+            en = true;
+        }
+        if (digitIndex > 10) {
+            digital = true;
+        }
+        if (symbolIndex > 10) {
+            symb = true;
+        }
+
+        ArrayList<Character> cryptoAlphabet = new ArrayList<>();
+
+//      Собираем алфавит
+
+        if (ru == true) {
+            for (int i = 0; i < ruAlphabet.length(); i++) {
+                cryptoAlphabet.add(ruAlphabet.charAt(i));
+            }
+        }
+
+        if (en == true) {
+            for (int i = 0; i < enAlphabet.length(); i++) {
+                cryptoAlphabet.add(enAlphabet.charAt(i));
+            }
+        }
+
+        if (digital == true) {
+            for (int i = 0; i < digit.length(); i++) {
+                cryptoAlphabet.add(digit.charAt(i));
+            }
+        }
+
+        if (symb == true) {
+            for (int i = 0; i < symbol.length(); i++) {
+                cryptoAlphabet.add(symbol.charAt(i));
+            }
+        }
+
+        cryptoAlphabet.addAll(cryptoAlphabet);
+
+        return cryptoAlphabet;
     }
 
 }

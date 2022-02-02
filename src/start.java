@@ -47,9 +47,9 @@ public class start {
         } else if (select == 4) {
             System.out.println("Введите путь к файлу с образцом текста");
             String sample = scanner.nextLine();
-            System.out.println("Начат анализ текста");
-            analyzer.statisticAnalyzer(src, sample);
-            System.out.println("Ну тут еще не готово)))");
+//            System.out.println("Начат анализ текста");
+//            analyzer.statisticAnalyzer(src, sample);
+            System.out.println("Метод не закончен");
         }
     }
 
