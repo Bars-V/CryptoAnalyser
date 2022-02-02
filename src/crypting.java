@@ -34,7 +34,13 @@ public class crypting {
     }
 
     public static Integer bruteforce(String cryptingText) {
-        String text = cryptingText.substring(0, 10_000);
+        int lenth = cryptingText.length();
+        String text;
+        if (lenth > 10_000) {
+            text = cryptingText.substring(0, 10_000);
+        } else {
+            text = cryptingText;
+        }
         int temp = Integer.MIN_VALUE;
         int key = 0;
         for (int i = 0; i < cryptoAlphabet().size(); i++) {
